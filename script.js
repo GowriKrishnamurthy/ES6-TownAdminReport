@@ -16,7 +16,6 @@ All the report data should be printed to the console.
 HINT: Use some of the ES6 features: classes, subclasses, template strings, default parameters, maps, arrow functions, destructuring, etc.
 */
 
-
 // Common member variables added in Base class
 class Element {
     constructor(name, buildyear) {
@@ -40,12 +39,24 @@ class Park extends Element {
 }
 class Street extends Element {
     // default size classification - normal (tiny/small/normal/big/huge)
-    constructor(name, buildYear, length, size = 'normal') {
+    constructor(name, buildYear, length, size =3) {
+        
         // Call the base class's constructor for the common member variables
         super(name, buildYear);
 
         this.length = length;
         this.size = size;
+    }
+
+    classifyStreet () {
+        // Key value pair for the size classificatin
+        const classification = new Map();
+        classification.set(1, 'tiny');
+        classification.set(2, 'small');
+        classification.set(3, 'normal');
+        classification.set(4, 'big');
+        classification.set(5, 'huge');
+        console.log(`${this.name}, built in ${this.buildYear}, is a ${classification.get(this.size)} street.`);
     }
 }
 
@@ -57,8 +68,15 @@ function reportStreets(s) {
     document.writeln('-----STREETS REPORT-----');
 }
 
-const allParks = [];
-const allStreets = [];
+
+const allParks = [new Park('Jells Park', 1894, 4.5, 3715),
+                 new Park('Glen Reserve', 1987, 1.1, 98),
+                 new Park('Brandon Park', 1973, 0.4, 49)];
+
+const allStreets = [new Street('Gold View Avenue', 1999, 1.1, 4),
+                   new Street('Lum Road', 2008, 2.7, 2),
+                   new Street('6th Street', 2015, 0.8),
+                   new Street('Sunset Boulevard', 1982, 2.5, 5)];
 
 reportParks(allParks);
 reportStreets(allStreets);
