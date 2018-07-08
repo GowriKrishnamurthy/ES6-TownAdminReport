@@ -17,14 +17,32 @@ HINT: Use some of the ES6 features: classes, subclasses, template strings, defau
 */
 
 
+// Common member variables added in Base class
 class Element {
     constructor(name, buildyear) {
         this.name = name;
         this.buildYear = buildYear;
     }
 }
-class Park extends Element { }
-class Street extends Element { }
+class Park extends Element {
+    constructor(name, buildYear, area, numTrees) {
+        // Call the base class's constructor for the common member variables
+        super(name, buildYear);
+        
+        this.area = area; //km2
+        this.numTrees = numTrees;
+    }
+}
+class Street extends Element {
+    // default size classification - normal (tiny/small/normal/big/huge)
+    constructor(name, buildYear, length, size = 'normal') {
+        // Call the base class's constructor for the common member variables
+        super(name, buildYear);
+
+        this.length = length;
+        this.size = size;
+    }
+}
 
 function reportParks(p) {
     document.writeln('-----PARKS REPORT-----\n');
