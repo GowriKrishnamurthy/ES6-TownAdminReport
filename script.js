@@ -15,3 +15,28 @@ At an end-of-year meeting, your boss wants a final report with the following:
 All the report data should be printed to the console.
 HINT: Use some of the ES6 features: classes, subclasses, template strings, default parameters, maps, arrow functions, destructuring, etc.
 */
+
+
+class Element {
+    constructor(name, buildyear) {
+        this.name = name;
+        this.buildYear = buildYear;
+    }
+}
+class Park extends Element { }
+class Street extends Element { }
+
+function reportParks(p) {
+    document.writeln('-----PARKS REPORT-----\n');
+}
+
+function reportStreets(s) {
+    document.writeln('-----STREETS REPORT-----');
+}
+
+const allParks = [];
+const allStreets = [];
+
+reportParks(allParks);
+reportStreets(allStreets);
+
