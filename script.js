@@ -18,7 +18,7 @@ HINT: Use some of the ES6 features: classes, subclasses, template strings, defau
 
 // Common member variables added in Base class
 class Element {
-    constructor(name, buildyear) {
+    constructor(name, buildYear) {
         this.name = name;
         this.buildYear = buildYear;
     }
@@ -33,8 +33,8 @@ class Park extends Element {
     }
     treeDensity() {
         // Calculate density of the park
-        const density = this.numTrees / this.area;
-        document.writeln(`${this.name} has a tree density of ${density} trees per square km.`);
+        const density = Math.round(this.numTrees / this.area);
+        document.writeln(`${this.name} has a tree density of ${density} trees per square km. <br>`);
     }
 }
 class Street extends Element {
@@ -56,22 +56,40 @@ class Street extends Element {
         classification.set(3, 'normal');
         classification.set(4, 'big');
         classification.set(5, 'huge');
-        console.log(`${this.name}, built in ${this.buildYear}, is a ${classification.get(this.size)} street.`);
+
+        document.writeln(`${this.name}, built in ${this.buildYear}, is a <strong> ${classification.get(this.size)}</strong>  street. <br>`);
     }
 }
 
-function reportParks(p) {
-    document.writeln('-----PARKS REPORT-----\n');
+function reportParks(parkArr) {
+    document.writeln('-----PARKS REPORT-----<br>');
+   
+    // 1. Tree density of each park in the town (forumla: number of trees/park area)
+    parkArr.forEach(element => {
+        element.treeDensity();
+    });
+
+    // 2. Average age of each town's park (forumla: sum of all ages/number of parks)
+
+    // 3. The name of the park that has more than 1000 trees
+    const parkWith1000Trees = parkArr.map(element => element.numTrees).findIndex(element => element >= 1000);
+    if(parkWith1000Trees>=0){
+        document.writeln('<br>-----Parks that have more than 1000 trees-----<br>');
+        document.writeln(`${parkArr[i].name} <br>`);       
+    }
 }
 
-function reportStreets(s) {
-    document.writeln('-----STREETS REPORT-----');
+function reportStreets(streetArr) {
+    document.writeln(' <br> -----STREETS REPORT----- <br>');
+    // 4. Total and average length of the town's streets
+
+    // 5. Size classification of all streets: tiny/small/normal/big/huge. If the size is unknown, the default is normal
+    streetArr.forEach(element => element.classifyStreet());    
 }
 
-
-const allParks = [new Park('Jells Park', 1894, 4.5, 3715),
+const allParks = [new Park('Jells Park', 1894, 4.5, 1715),
                  new Park('Glen Reserve', 1987, 1.1, 98),
-                 new Park('Brandon Park', 1973, 0.4, 49)];
+                 new Park('Brandon Park', 1973, 2.4, 149)];
 
 const allStreets = [new Street('Gold View Avenue', 1999, 1.1, 4),
                    new Street('Lum Road', 2008, 2.7, 2),
