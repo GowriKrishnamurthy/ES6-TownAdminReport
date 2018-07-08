@@ -32,6 +32,11 @@ class Park extends Element {
         this.area = area; //km2
         this.numTrees = numTrees;
     }
+    treeDensity() {
+        // Calculate density of the park
+        const density = this.numTrees / this.area;
+        document.writeln(`${this.name} has a tree density of ${density} trees per square km.`);
+    }
 }
 class Street extends Element {
     // default size classification - normal (tiny/small/normal/big/huge)
