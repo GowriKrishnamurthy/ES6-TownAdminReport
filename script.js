@@ -75,7 +75,7 @@ function reportParks(parkArr) {
     const parkWith1000Trees = parkArr.map(element => element.numTrees).findIndex(element => element >= 1000);
     if(parkWith1000Trees>=0){
         document.writeln('<br>-----Parks that have more than 1000 trees-----<br>');
-        document.writeln(`${parkArr[i].name} <br>`);       
+        document.writeln(`${parkArr[parkWith1000Trees].name} <br>`);       
     }
 }
 
