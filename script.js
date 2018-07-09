@@ -16,14 +16,16 @@ All the report data should be printed to the console.
 HINT: Use some of the ES6 features: classes, subclasses, template strings, default parameters, maps, arrow functions, destructuring, etc.
 */
 
-// Common member variables added in Base class
-class Element {
+// Declare parent class with common member variables
+class TownAdministration {
     constructor(name, buildYear) {
         this.name = name;
         this.buildYear = buildYear;
     }
 }
-class Park extends Element {
+
+// Declare Park class. Inherits from TownAdministration
+class Park extends TownAdministration {
     constructor(name, buildYear, area, numTrees) {
         // Call the base class's constructor for the common member variables
         super(name, buildYear);
@@ -31,15 +33,19 @@ class Park extends Element {
         this.area = area; //km2
         this.numTrees = numTrees;
     }
+    
+    //Prints tree density for the current object
     treeDensity() {
         // Calculate density of the park
         const density = Math.round(this.numTrees / this.area);
         document.writeln(`${this.name} has a tree density of ${density} trees per square km. <br>`);
     }
 }
-class Street extends Element {
+
+// Declare Street class. Inherits from TownAdministration
+class Street extends TownAdministration {
     // default size classification - normal (tiny/small/normal/big/huge)
-    constructor(name, buildYear, length, size =3) {
+    constructor(name, buildYear, length, size = 3) {
         
         // Call the base class's constructor for the common member variables
         super(name, buildYear);
@@ -48,7 +54,8 @@ class Street extends Element {
         this.size = size;
     }
 
-    classifyStreet () {
+    // Prints the size class for the current object.
+    classifyStreet() {
         // Key value pair for the size classificatin
         const classification = new Map();
         classification.set(1, 'tiny');
@@ -61,41 +68,59 @@ class Street extends Element {
     }
 }
 
+// Common method to caluclate sum and average of aray elements passed
+function calc(arr) {
+    // Loops through the  array and adds the current element value to the prev.
+    const sum = arr.reduce((prev, cur, index) => prev + cur, 0);
+    return [sum, sum / arr.length];
+    
+}
+
 function reportParks(parkArr) {
-    document.writeln('-----PARKS REPORT-----<br>');
+    document.writeln('<b>-----PARKS REPORT-----</b><br>');
    
     // 1. Tree density of each park in the town (forumla: number of trees/park area)
-    parkArr.forEach(element => {
-        element.treeDensity();
+    parkArr.forEach(el => {
+        el.treeDensity();
     });
 
     // 2. Average age of each town's park (forumla: sum of all ages/number of parks)
+    // Declare an array with the ages of all the parks
+    const ageArr = parkArr.map(el => (new Date().getFullYear())- el.buildYear);
+    const [totalAge,averageAge]=calc(ageArr);
+    document.writeln(`<br> Our ${ageArr.length} parks have an average age of <b>${Math.round(averageAge)}</b>`);
 
     // 3. The name of the park that has more than 1000 trees
-    const parkWith1000Trees = parkArr.map(element => element.numTrees).findIndex(element => element >= 1000);
-    if(parkWith1000Trees>=0){
-        document.writeln('<br>-----Parks that have more than 1000 trees-----<br>');
-        document.writeln(`${parkArr[parkWith1000Trees].name} <br>`);       
-    }
-}
+    //Loops through the array and prints the park with over 1000 trees
+    document.writeln("<br>Parks that have over 1000 trees: <br>");
+    parkArr.forEach(el => {
+        if (el.numTrees >= 1000)
+            document.writeln(`-- ${el.name} <br>`);
+    });
+}1
 
 function reportStreets(streetArr) {
-    document.writeln(' <br> -----STREETS REPORT----- <br>');
+    document.writeln(' <br> <b>-----STREETS REPORT----- </b><br>');
+
     // 4. Total and average length of the town's streets
+    const [totalLength,avgLength]=calc(streetArr.map(el=>el.length))
+    document.writeln(`Our ${streetArr.length} streets have a total length of ${Math.round(totalLength)} km,
+     with an average of ${Math.round(avgLength)} km. <br>`);
 
     // 5. Size classification of all streets: tiny/small/normal/big/huge. If the size is unknown, the default is normal
-    streetArr.forEach(element => element.classifyStreet());    
+    streetArr.forEach(el => el.classifyStreet());    
 }
 
-const allParks = [new Park('Jells Park', 1894, 4.5, 1715),
-                 new Park('Glen Reserve', 1987, 1.1, 98),
-                 new Park('Brandon Park', 1973, 2.4, 149)];
+// Declare array of new park objects 
+const allParks = [new Park('Jells Park', 1894, 4.5, 2715),
+                 new Park('Glen Reserve', 1987, 2.1, 1298),
+                 new Park('Brandon Park', 1973, 1.1, 149)];
 
+// Declare array of new street objects 
 const allStreets = [new Street('Gold View Avenue', 1999, 1.1, 4),
                    new Street('Lum Road', 2008, 2.7, 2),
-                   new Street('6th Street', 2015, 0.8),
+                   new Street('View Mount Road', 2015, 0.8),
                    new Street('Sunset Boulevard', 1982, 2.5, 5)];
 
 reportParks(allParks);
 reportStreets(allStreets);
-
